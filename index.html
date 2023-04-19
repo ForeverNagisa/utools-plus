@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+            font-size: 32px;
+		}
+		#container {
+			display: flex;
+			flex-wrap: wrap;
+		}
+		#left {
+			flex: 1;
+			padding: 10px;
+			height: 100vh;
+			box-sizing: border-box;
+			overflow-y: scroll;
+			border-right: 1px solid #ccc;
+			resize: none;
+			outline: none;
+		}
+		#left input {
+			border: none;
+			width: 100%;
+			padding: 5px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+		}
+		#right {
+			flex: 1;
+			padding: 10px;
+			height: 100vh;
+			box-sizing: border-box;
+			overflow-y: scroll;
+			resize: none;
+			outline: none;
+            color: #ff425e;
+		}
+		#right input {
+			border: none;
+			width: 100%;
+			padding: 5px;
+			box-sizing: border-box;
+		}
+		
+		#separator {
+			flex: 0 0 100%;
+			height: 1px;
+			background-color: #ccc;
+			margin: 10px 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="left" contenteditable="true"></div>
+		<div id="right" contenteditable="true"></div>
+		<div id="separator"></div>
+	</div>
+
+	<script>
+		let left = document.getElementById('left');
+		let right = document.getElementById('right');
+		let result = null;
+		left.addEventListener('input', () => {
+			// split the input into lines
+			let lines = left.innerText.trim().split('\n');
+			// clear the right side
+			right.innerHTML = '';
+			// for each line, calculate the result and show it on the right side
+			for (let i = 0; i < lines.length; i++) {
+				let line = lines[i].trim();
+				// ignore empty lines and comment lines
+				if (line === '' || line.startsWith('#')) {
+					result = line.slice(1) + "\n";
+                    let lineDiv = document.createElement('div');
+					lineDiv.innerText = result;
+					lineDiv.classList.add('result');
+					right.appendChild(lineDiv);
+                    continue
+				}
+				// try to evaluate the expression and show the result
+				try {
+					result = eval(line);
+					let lineDiv = document.createElement('div');
+					lineDiv.innerText = result;
+					lineDiv.classList.add('result');
+					right.appendChild(lineDiv);
+				} catch (error) {
+					console.error(error);
+					result = null;
+				}
+			}
+			// scroll to the bottom of the right side
+			right.scrollTop = right.scrollHeight;
+		});
+	</script>
+</body>
+</html>

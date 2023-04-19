@@ -1,0 +1,11 @@
+{
+	"main": "index.html",
+	"logo": "logo.jpg",
+	"features": [
+		{
+		  "code": "calculator",
+		  "explain": "这是一个笔记计算器",
+			"cmds":["calculator", "笔记计算器"]
+		}
+	]
+}
