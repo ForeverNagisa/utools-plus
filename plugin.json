@@ -5,7 +5,15 @@
 		{
 		  "code": "calculator",
 		  "explain": "这是一个笔记计算器",
-			"cmds":["calculator", "笔记计算器"]
+          "cmds": [
+            {
+                "type": "regex",
+                "label": "计算器",
+                "match": "/(\\d+)([\\+\\-\\*/])(\\d+)/",
+                "minLength": 1,
+                "maxLength": 10
+            }
+        ]
 		}
 	]
 }
